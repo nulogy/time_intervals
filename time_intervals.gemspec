@@ -6,7 +6,7 @@ require "time_intervals/version"
 Gem::Specification.new do |spec|
   spec.name          = "time_intervals"
   spec.version       = TimeIntervals::VERSION
-  spec.authors       = ["Alistair McKinnell"]
+  spec.authors       = ["Alistair McKinnell", "Sean Kirby", "Shahriyar Nasir"]
   spec.email         = ["alistairm@nulogy.com"]
 
   spec.summary       = "Library for doing operations on collections of time intervals."
