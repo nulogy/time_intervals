@@ -4,7 +4,7 @@ require "time"
 require "spec_helper"
 
 RSpec.describe TimeIntervals::Collection do
-  context "#initialize" do
+  describe "#initialize" do
     it "accepts no Intervals" do
       expect(TimeIntervals::Collection.new).to be_empty
     end
@@ -38,7 +38,7 @@ RSpec.describe TimeIntervals::Collection do
     end
   end
 
-  context "#all_intervals_within?" do
+  describe "#all_intervals_within?" do
     it "when empty" do
       subject = create_subject([])
 
@@ -80,7 +80,7 @@ RSpec.describe TimeIntervals::Collection do
     end
   end
 
-  context "#has_overlapping_intervals?" do
+  describe "#has_overlapping_intervals?" do
     it "when empty" do
       subject = create_subject([])
 
@@ -115,7 +115,7 @@ RSpec.describe TimeIntervals::Collection do
     end
   end
 
-  context "#coalesce" do
+  describe "#coalesce" do
     it "when empty" do
       subject = create_subject([])
 
@@ -199,7 +199,7 @@ RSpec.describe TimeIntervals::Collection do
     end
   end
 
-  context "#intersect" do
+  describe "#intersect" do
     subject do
       create_subject([
         ["00:00:00", "00:09:00"],
@@ -257,7 +257,7 @@ RSpec.describe TimeIntervals::Collection do
     end
   end
 
-  context "#intersect with a single Intervals intersection" do
+  describe "#intersect with a single Intervals intersection" do
     context "with overlapping TimeIntervals" do
       subject {
         create_subject([
@@ -350,7 +350,7 @@ RSpec.describe TimeIntervals::Collection do
     end
   end
 
-  context "#length_in_seconds" do
+  describe "#length_in_seconds" do
     it "when empty" do
       subject = create_subject([])
 
@@ -370,7 +370,7 @@ RSpec.describe TimeIntervals::Collection do
     end
   end
 
-  context "#length_in_hours" do
+  describe "#length_in_hours" do
     it "for multiple Intervals" do
       subject = create_subject(
         [                           # Minutes
@@ -384,7 +384,7 @@ RSpec.describe TimeIntervals::Collection do
     end
   end
 
-  context "partition count" do
+  describe ".partition count" do
     it "generates a histogram of how many Intervals overlap in any period" do
       subject = create_subject([
         ["00:00:00", "00:30:00"],
