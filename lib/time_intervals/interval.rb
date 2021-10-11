@@ -51,6 +51,7 @@ module TimeIntervals
 
     def overlap_duration_in_seconds(other)
       return 0 if disjoint?(other)
+
       [other.ended_at, ended_at].min - [other.started_at, started_at].max
     end
 
@@ -70,6 +71,7 @@ module TimeIntervals
     def ==(other)
       other.class == self.class && other.state == state
     end
+
     alias_method :eql?, :==
 
     def hash

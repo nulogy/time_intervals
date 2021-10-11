@@ -30,7 +30,7 @@ module TimeIntervals
     end
 
     # Returns true if any of the contained TimeIntervals::Intervals overlap.
-    def has_overlapping_intervals?
+    def has_overlapping_intervals? # rubocop:disable Naming/PredicateName
       length_in_seconds != coalesce.length_in_seconds
     end
 
