@@ -1,0 +1,138 @@
+require: rubocop-rspec
+
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+  TargetRubyVersion: 2.7
+
+Gemspec/RequiredRubyVersion:
+  Enabled: false
+
+Lint/ConstantDefinitionInBlock:
+  Exclude:
+    - spec/**/*_spec.rb
+
+Layout/FirstArgumentIndentation:
+  Enabled: true
+  EnforcedStyle: consistent
+
+Layout/LineLength:
+  Max: 120
+
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: false
+
+Lint/RaiseException:
+  Enabled: false
+
+Lint/StructNewOverride:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Naming/VariableNumber:
+  Enabled: true
+  EnforcedStyle: snake_case
+
+RSpec/AnyInstance:
+  Enabled: false
+
+RSpec/ContextWording:
+  Enabled: false
+
+RSpec/DescribedClass:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Max: 20
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 8
+
+RSpec/MultipleExpectations:
+  Max: 5
+
+RSpec/LeadingSubject:
+  Enabled: false
+
+RSpec/MessageSpies:
+  Enabled: false
+
+RSpec/NamedSubject:
+  Enabled: false
+
+RSpec/NotToNot:
+  EnforcedStyle: to_not
+
+Style/Alias:
+  EnforcedStyle: prefer_alias_method
+
+Style/BlockDelimiters:
+  IgnoredMethods:
+    - 'expect'
+    - 'let'
+    - 'let!'
+    - 'subject'
+
+Style/ExponentialNotation:
+  Enabled: false
+
+Style/HashEachMethods:
+  Enabled: false
+
+Style/HashTransformKeys:
+  Enabled: false
+
+Style/HashTransformValues:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/DocumentDynamicEvalDefinition:
+  Enabled: false
+
+Style/EmptyMethod:
+  Enabled: false
+
+Style/ExpandPathArguments:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/MutableConstant:
+  Enabled: false
+
+Style/SlicingWithRange:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/SymbolArray:
+  Enabled: false
+
+Style/RegexpLiteral:
+  Enabled: true
+  EnforcedStyle: mixed
+  AllowInnerSlashes: false
+
+Style/RescueModifier:
+  Enabled: false
+
+Style/RescueStandardError:
+  EnforcedStyle: implicit
+
+Style/WordArray:
+  Enabled: false
