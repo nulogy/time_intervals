@@ -22,17 +22,21 @@ RSpec.describe TimeIntervals::Collection do
     end
 
     it "accepts array of multiple Intervals" do
-      expect(TimeIntervals::Collection.new([
-        create_interval("03:15:00", "04:30:00"),
-        create_interval("05:00:00", "06:00:00")
-      ]).length).to eq(2)
+      expect(TimeIntervals::Collection.new(
+        [
+          create_interval("03:15:00", "04:30:00"),
+          create_interval("05:00:00", "06:00:00")
+        ]
+      ).length).to eq(2)
     end
 
     it "accepts another TimeIntervals::Collection" do
-      another = create_collection([
-        ["03:15:00", "04:30:00"],
-        ["05:00:00", "06:00:00"]
-      ])
+      another = create_collection(
+        [
+          ["03:15:00", "04:30:00"],
+          ["05:00:00", "06:00:00"]
+        ]
+      )
 
       expect(TimeIntervals::Collection.new(another).length).to eq(2)
     end
@@ -48,9 +52,11 @@ RSpec.describe TimeIntervals::Collection do
     end
 
     it "for a single Interval" do
-      subject = create_subject([
-        ["03:15:00", "04:00:00"]
-      ])
+      subject = create_subject(
+        [
+          ["03:15:00", "04:00:00"]
+        ]
+      )
 
       bounding_interval = create_interval("03:15:00", "04:30:00")
 
@@ -58,10 +64,12 @@ RSpec.describe TimeIntervals::Collection do
     end
 
     it "for a at least one Interval prior to bounding Interval" do
-      subject = create_subject([
-        ["03:00:00", "03:30:00"],
-        ["03:45:00", "04:00:00"]
-      ])
+      subject = create_subject(
+        [
+          ["03:00:00", "03:30:00"],
+          ["03:45:00", "04:00:00"]
+        ]
+      )
 
       bounding_interval = create_interval("03:15:00", "04:30:00")
 
@@ -69,10 +77,12 @@ RSpec.describe TimeIntervals::Collection do
     end
 
     it "for a at least one Interval subsequent to bounding Interval" do
-      subject = create_subject([
-        ["03:15:00", "04:00:00"],
-        ["04:15:00", "04:35:00"]
-      ])
+      subject = create_subject(
+        [
+          ["03:15:00", "04:00:00"],
+          ["04:15:00", "04:35:00"]
+        ]
+      )
 
       bounding_interval = create_interval("03:15:00", "04:30:00")
 
@@ -88,28 +98,34 @@ RSpec.describe TimeIntervals::Collection do
     end
 
     it "for a single Interval" do
-      subject = create_subject([
-        ["00:00:00", "02:00:00"]
-      ])
+      subject = create_subject(
+        [
+          ["00:00:00", "02:00:00"]
+        ]
+      )
 
       expect(subject.has_overlapping_intervals?).to be(false)
     end
 
     it "for disjoint Intervals" do
-      subject = create_subject([
-        ["00:00:00", "02:00:00"],
-        ["04:00:00", "05:00:00"]
-      ])
+      subject = create_subject(
+        [
+          ["00:00:00", "02:00:00"],
+          ["04:00:00", "05:00:00"]
+        ]
+      )
 
       expect(subject.has_overlapping_intervals?).to be(false)
     end
 
     it "for overlapping Intervals" do
-      subject = create_subject([
-        ["00:00:00", "02:00:00"],
-        ["01:00:00", "02:00:00"],
-        ["03:00:00", "04:00:00"]
-      ])
+      subject = create_subject(
+        [
+          ["00:00:00", "02:00:00"],
+          ["01:00:00", "02:00:00"],
+          ["03:00:00", "04:00:00"]
+        ]
+      )
 
       expect(subject.has_overlapping_intervals?).to be(true)
     end
@@ -123,77 +139,97 @@ RSpec.describe TimeIntervals::Collection do
     end
 
     it "for a single Interval" do
-      subject = create_subject([
-        ["00:00:00", "02:00:00"]
-      ])
+      subject = create_subject(
+        [
+          ["00:00:00", "02:00:00"]
+        ]
+      )
 
       expect(subject.coalesce).to eq(subject)
     end
 
     it "for disjoint Intervals" do
-      subject = create_subject([
-        ["00:00:00", "02:00:00"],
-        ["04:00:00", "05:00:00"]
-      ])
+      subject = create_subject(
+        [
+          ["00:00:00", "02:00:00"],
+          ["04:00:00", "05:00:00"]
+        ]
+      )
 
       expect(subject.coalesce).to eq(subject)
     end
 
     it "identical overlapping Intervals" do
-      subject = create_subject([
-        ["00:00:00", "02:00:00"],
-        ["00:00:00", "02:00:00"],
-        ["03:00:00", "04:00:00"]
-      ])
+      subject = create_subject(
+        [
+          ["00:00:00", "02:00:00"],
+          ["00:00:00", "02:00:00"],
+          ["03:00:00", "04:00:00"]
+        ]
+      )
 
-      expected = create_collection([
-        ["00:00:00", "02:00:00"],
-        ["03:00:00", "04:00:00"]
-      ])
+      expected = create_collection(
+        [
+          ["00:00:00", "02:00:00"],
+          ["03:00:00", "04:00:00"]
+        ]
+      )
 
       expect(subject.coalesce).to eq(expected)
     end
 
     it "contained overlapping Intervals" do
-      subject = create_subject([
-        ["00:00:00", "02:00:00"],
-        ["00:30:00", "01:30:00"],
-        ["03:00:00", "04:00:00"]
-      ])
+      subject = create_subject(
+        [
+          ["00:00:00", "02:00:00"],
+          ["00:30:00", "01:30:00"],
+          ["03:00:00", "04:00:00"]
+        ]
+      )
 
-      expected = create_collection([
-        ["00:00:00", "02:00:00"],
-        ["03:00:00", "04:00:00"]
-      ])
+      expected = create_collection(
+        [
+          ["00:00:00", "02:00:00"],
+          ["03:00:00", "04:00:00"]
+        ]
+      )
 
       expect(subject.coalesce).to eq(expected)
     end
 
     it "contained overlapping Intervals into one Interval" do
-      subject = create_subject([
-        ["00:00:00", "02:00:00"],
-        ["00:30:00", "01:30:00"],
-        ["01:00:00", "03:00:00"],
-        ["01:00:00", "04:00:00"]
-      ])
+      subject = create_subject(
+        [
+          ["00:00:00", "02:00:00"],
+          ["00:30:00", "01:30:00"],
+          ["01:00:00", "03:00:00"],
+          ["01:00:00", "04:00:00"]
+        ]
+      )
 
-      expected = create_collection([
-        ["00:00:00", "04:00:00"]
-      ])
+      expected = create_collection(
+        [
+          ["00:00:00", "04:00:00"]
+        ]
+      )
 
       expect(subject.coalesce).to eq(expected)
     end
 
     it "adjacent Intervals into one Interval" do
-      subject = create_subject([
-        ["00:00:00", "02:00:00"],
-        ["02:00:00", "03:00:00"],
-        ["03:00:00", "04:00:00"]
-      ])
+      subject = create_subject(
+        [
+          ["00:00:00", "02:00:00"],
+          ["02:00:00", "03:00:00"],
+          ["03:00:00", "04:00:00"]
+        ]
+      )
 
-      expected = create_collection([
-        ["00:00:00", "04:00:00"]
-      ])
+      expected = create_collection(
+        [
+          ["00:00:00", "04:00:00"]
+        ]
+      )
 
       expect(subject.coalesce).to eq(expected)
     end
@@ -201,13 +237,15 @@ RSpec.describe TimeIntervals::Collection do
 
   describe "#intersect" do
     subject do
-      create_subject([
-        ["00:00:00", "00:09:00"],
-        ["00:06:00", "00:13:00"],
-        ["00:13:00", "00:19:00"],
-        ["00:23:00", "00:32:00"],
-        ["00:28:00", "00:36:00"]
-      ])
+      create_subject(
+        [
+          ["00:00:00", "00:09:00"],
+          ["00:06:00", "00:13:00"],
+          ["00:13:00", "00:19:00"],
+          ["00:23:00", "00:32:00"],
+          ["00:28:00", "00:36:00"]
+        ]
+      )
     end
 
     it "nil intersections" do
@@ -221,9 +259,11 @@ RSpec.describe TimeIntervals::Collection do
     it "empty intersection" do
       intersection = create_interval("00:02:00", "00:02:00")
 
-      expected = create_collection([
-        ["00:02:00", "00:02:00"]
-      ])
+      expected = create_collection(
+        [
+          ["00:02:00", "00:02:00"]
+        ]
+      )
 
       expect(subject.intersect(intersection)).to eq(expected)
     end
@@ -231,27 +271,33 @@ RSpec.describe TimeIntervals::Collection do
     it "single Interval intersection" do
       intersection = create_interval("00:02:00", "00:07:00")
 
-      expected = create_collection([
-        ["00:02:00", "00:07:00"],
-        ["00:06:00", "00:07:00"]
-      ])
+      expected = create_collection(
+        [
+          ["00:02:00", "00:07:00"],
+          ["00:06:00", "00:07:00"]
+        ]
+      )
 
       expect(subject.intersect(intersection)).to eq(expected)
     end
 
     it "multiple Intervals intersection" do
-      intersection = create_collection([
-        ["00:10:00", "00:25:00"],
-        ["00:27:00", "00:35:00"]
-      ])
+      intersection = create_collection(
+        [
+          ["00:10:00", "00:25:00"],
+          ["00:27:00", "00:35:00"]
+        ]
+      )
 
-      expected = create_collection([
-        ["00:10:00", "00:13:00"],
-        ["00:13:00", "00:19:00"],
-        ["00:23:00", "00:25:00"],
-        ["00:27:00", "00:32:00"],
-        ["00:28:00", "00:35:00"]
-      ])
+      expected = create_collection(
+        [
+          ["00:10:00", "00:13:00"],
+          ["00:13:00", "00:19:00"],
+          ["00:23:00", "00:25:00"],
+          ["00:27:00", "00:32:00"],
+          ["00:28:00", "00:35:00"]
+        ]
+      )
 
       expect(subject.intersect(intersection)).to eq(expected)
     end
@@ -260,18 +306,22 @@ RSpec.describe TimeIntervals::Collection do
   describe "#intersect with a single Intervals intersection" do
     context "with overlapping TimeIntervals" do
       subject {
-        create_subject([
-          ["00:30:00", "02:00:00"],
-          ["01:00:00", "04:00:00"]
-        ])
+        create_subject(
+          [
+            ["00:30:00", "02:00:00"],
+            ["01:00:00", "04:00:00"]
+          ]
+        )
       }
 
       it "when partially intersecting first" do
         intersect_with = create_interval("00:00:00", "01:00:00")
 
-        expected = create_collection([
-          ["00:30:00", "01:00:00"]
-        ])
+        expected = create_collection(
+          [
+            ["00:30:00", "01:00:00"]
+          ]
+        )
 
         expect(subject.intersect(intersect_with)).to eq(expected)
       end
@@ -279,10 +329,12 @@ RSpec.describe TimeIntervals::Collection do
       it "when identical to first" do
         intersect_with = create_interval("00:30:00", "02:00:00")
 
-        expected = create_collection([
-          ["00:30:00", "02:00:00"],
-          ["01:00:00", "02:00:00"]
-        ])
+        expected = create_collection(
+          [
+            ["00:30:00", "02:00:00"],
+            ["01:00:00", "02:00:00"]
+          ]
+        )
 
         expect(subject.intersect(intersect_with)).to eq(expected)
       end
@@ -290,10 +342,12 @@ RSpec.describe TimeIntervals::Collection do
       it "when partially intersecting both" do
         intersect_with = create_interval("01:00:00", "02:30:00")
 
-        expected = create_collection([
-          ["01:00:00", "02:30:00"],
-          ["01:00:00", "02:00:00"]
-        ])
+        expected = create_collection(
+          [
+            ["01:00:00", "02:30:00"],
+            ["01:00:00", "02:00:00"]
+          ]
+        )
 
         expect(subject.intersect(intersect_with)).to eq(expected)
       end
@@ -301,18 +355,22 @@ RSpec.describe TimeIntervals::Collection do
 
     context "with disjoint Intervals" do
       subject {
-        create_subject([
-          ["00:30:00", "02:00:00"],
-          ["03:00:00", "04:00:00"]
-        ])
+        create_subject(
+          [
+            ["00:30:00", "02:00:00"],
+            ["03:00:00", "04:00:00"]
+          ]
+        )
       }
 
       it "when partially intersecting first" do
         intersect_with = create_interval("00:00:00", "01:00:00")
 
-        expected = create_collection([
-          ["00:30:00", "01:00:00"]
-        ])
+        expected = create_collection(
+          [
+            ["00:30:00", "01:00:00"]
+          ]
+        )
 
         expect(subject.intersect(intersect_with)).to eq(expected)
       end
@@ -320,9 +378,11 @@ RSpec.describe TimeIntervals::Collection do
       it "when fully intersecting first" do
         intersect_with = create_interval("00:30:00", "02:30:00")
 
-        expected = create_collection([
-          ["00:30:00", "02:00:00"]
-        ])
+        expected = create_collection(
+          [
+            ["00:30:00", "02:00:00"]
+          ]
+        )
 
         expect(subject.intersect(intersect_with)).to eq(expected)
       end
@@ -330,10 +390,12 @@ RSpec.describe TimeIntervals::Collection do
       it "when partially intersecting both" do
         intersect_with = create_interval("01:00:00", "03:30:00")
 
-        expected = create_collection([
-          ["01:00:00", "02:00:00"],
-          ["03:00:00", "03:30:00"]
-        ])
+        expected = create_collection(
+          [
+            ["01:00:00", "02:00:00"],
+            ["03:00:00", "03:30:00"]
+          ]
+        )
 
         expect(subject.intersect(intersect_with)).to eq(expected)
       end
@@ -341,9 +403,11 @@ RSpec.describe TimeIntervals::Collection do
       it "when partially intersecting second" do
         intersect_with = create_interval("03:15:00", "04:30:00")
 
-        expected = create_collection([
-          ["03:15:00", "04:00:00"]
-        ])
+        expected = create_collection(
+          [
+            ["03:15:00", "04:00:00"]
+          ]
+        )
 
         expect(subject.intersect(intersect_with)).to eq(expected)
       end
@@ -357,12 +421,12 @@ RSpec.describe TimeIntervals::Collection do
       expect(subject.length_in_seconds).to eq(0)
     end
 
-    it "for multiple Intervals" do
+    it "for multiple Intervals (of 30, 60 and 15 seconds)" do
       subject = create_subject(
-        [                           # Seconds
-          ["00:00:00", "00:00:30"], #   30
-          ["00:00:00", "00:01:00"], #   60
-          ["00:00:10", "00:00:25"]  #   15
+        [
+          ["00:00:00", "00:00:30"],
+          ["00:00:00", "00:01:00"],
+          ["00:00:10", "00:00:25"]
         ]
       )
 
@@ -371,12 +435,12 @@ RSpec.describe TimeIntervals::Collection do
   end
 
   describe "#length_in_hours" do
-    it "for multiple Intervals" do
+    it "for multiple Intervals (of 30, 60 and 15 minutes)" do
       subject = create_subject(
-        [                           # Minutes
-          ["00:00:00", "00:30:00"], #   30
-          ["00:00:00", "01:00:00"], #   60
-          ["00:10:00", "00:25:00"]  #   15
+        [
+          ["00:00:00", "00:30:00"],
+          ["00:00:00", "01:00:00"],
+          ["00:10:00", "00:25:00"]
         ]
       )
 
@@ -386,18 +450,22 @@ RSpec.describe TimeIntervals::Collection do
 
   describe ".partition count" do
     it "generates a histogram of how many Intervals overlap in any period" do
-      subject = create_subject([
-        ["00:00:00", "00:30:00"],
-        ["00:00:00", "01:00:00"],
-        ["00:10:00", "00:25:00"]
-      ])
+      subject = create_subject(
+        [
+          ["00:00:00", "00:30:00"],
+          ["00:00:00", "01:00:00"],
+          ["00:10:00", "00:25:00"]
+        ]
+      )
 
-      expected = create_collection([
-        ["00:00:00", "00:10:00"],
-        ["00:10:00", "00:25:00"],
-        ["00:25:00", "00:30:00"],
-        ["00:30:00", "01:00:00"]
-      ])
+      expected = create_collection(
+        [
+          ["00:00:00", "00:10:00"],
+          ["00:10:00", "00:25:00"],
+          ["00:25:00", "00:30:00"],
+          ["00:30:00", "01:00:00"]
+        ]
+      )
       expected_counts = [2, 3, 2, 1]
 
       expect(subject.partition_count).to eq(expected.zip(expected_counts))
