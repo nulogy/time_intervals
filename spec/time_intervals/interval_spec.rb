@@ -8,7 +8,9 @@ RSpec.describe TimeIntervals::Interval do
     expect { create_time_interval(nil, nil) }.to raise_error("Invalid interval")
     expect { create_time_interval(nil, "00:00:00") }.to raise_error("Invalid interval")
     expect { create_time_interval("00:01:00", nil) }.to raise_error("Invalid interval")
-    expect { create_time_interval("00:01:00", "00:00:00") }.to raise_error("Invalid interval: [2014-06-19 00:01:00, 2014-06-19 00:00:00]")
+    expect { create_time_interval("00:01:00", "00:00:00") }.to raise_error(
+      "Invalid interval: [2014-06-19 00:01:00, 2014-06-19 00:00:00]"
+    )
   end
 
   it "empty interval" do
